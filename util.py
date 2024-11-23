@@ -35,13 +35,14 @@ def scale_screen_shot(screen_shot: Image) -> Image:
 
     return screen_shot.resize(NDS_SCREEN_SIZE, Resampling.NEAREST)
 
-def get_true_location(screen: tuple[int, int, int, int], point: tuple[int, int]) -> tuple[int, int]:
+def get_true_location(screen: tuple[int, int, int, int],
+                      point: tuple[int, int]) -> tuple[int, int]:
     """
     Redimmensionne le point `point` relatif à l'écran virtuel `screen` pour
     correspondre à l'écran physique
     """
-    
+
     return (
-        screen[0] + screen[2] / NDS_SCREEN_SIZE[0] * point[0],
-        screen[1] + screen[3] / NDS_SCREEN_SIZE[1] * point[1]
+        screen[2] / NDS_SCREEN_SIZE[0] * point[0] * 0.75,
+        screen[3] / NDS_SCREEN_SIZE[1] * point[1] * 0.9
     )
