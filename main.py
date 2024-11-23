@@ -63,16 +63,28 @@ while True:
     top_screen_shot = get_screen_shot("top")
     bottom_screen_shot = get_screen_shot("bottom")
 
+    top_screen_shot.save("top.png")
+    bottom_screen_shot.save("bottom.png")
+
     for (character, face, target) in characters:
         # On essaye de trouver un personnage
-        target_position = find_character(face, target, top_screen_shot, bottom_screen_shot)
+        target_position = find_character(face, target, top_screen_shot,
+                                         bottom_screen_shot)
         # Si c'est le cas...
         if target_position:
             # Équivalent de `click` -- la fonction `click` ne fonctionnant pas
             # sur Linux, on doit employer une autre méthode pour parvenir à nos
             # fins
-            pyautogui.moveTo(get_true_location(bottom_coordinates, target_position))
+            pyautogui.moveTo(
+                (bottom_coordinates[0] + 4, bottom_coordinates[1] + 4))
             pyautogui.drag(0, 1, 0.15)
+            pyautogui.moveTo((0, 0))
+
+            real_position = get_true_location(bottom_coordinates, target_position)
+            pyautogui.move(real_position)
+            time.sleep(1)
+            pyautogui.drag(0, 1, 0.15)
+
             # On arrête l'exécution de la boucle car on a trouvé et cliqué sur
             # la cible
             break
